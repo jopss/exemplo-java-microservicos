@@ -4,6 +4,8 @@ Conjunto de projetos neste mono repo contendo um dominio especifico de exemplifi
 
 Foi levantado os seguintes microserviços abaixo, com suas portas de conexão web:
 
+![alt text](https://github.com/jopss/exemplo-java-microservicos/blob/main/docs/micros.png?raw=true)
+
 As tecnologias basicas de todos são:
 
 * SpringBoot
