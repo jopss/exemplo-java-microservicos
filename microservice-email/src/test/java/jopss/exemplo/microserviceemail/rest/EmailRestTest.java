@@ -69,7 +69,7 @@ public class EmailRestTest {
 				.accept(MediaType.APPLICATION_JSON)
 				.content(objectMapper.writeValueAsString(dado)))
 				.andExpect(status().isOk())
-				.andExpect(jsonPath("$.de").value("meuemailpadrao@provedor.com.br"))
+				.andExpect(jsonPath("$.de").value("jopss.sossoloti@gmail.com"))
 				.andExpect(jsonPath("$.titulo").value("titulo do email"))
 				.andExpect(jsonPath("$.mensagem").value("mensagem do email"));
 	}
@@ -77,10 +77,12 @@ public class EmailRestTest {
 	@Test
 	public void enviarEmailCompleto() throws Exception {
 		Email dado = getEmail();
+		String json = objectMapper.writeValueAsString(dado);
+
 		this.mockMvc.perform(post("/email")
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON)
-				.content(objectMapper.writeValueAsString(dado)))
+				.content(json))
 				.andExpect(status().isOk())
 				.andExpect(jsonPath("$.de").value("emailde@email.com"))
 				.andExpect(jsonPath("$.titulo").value("titulo do email"))

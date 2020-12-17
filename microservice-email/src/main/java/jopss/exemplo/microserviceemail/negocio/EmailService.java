@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class EmailService {
 
-    @Value("${email.padrao}")
+    @Value("${mail.default}")
     private String emailPadrao;
 
     @Autowired
