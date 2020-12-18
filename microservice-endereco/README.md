@@ -1,4 +1,4 @@
-# microservico-enderecoAPI
+# microservico-endereco
 
 Componentizacao em microservico de tratamento sobre endereços. Ao passar um CEP, vai por integração externa ao ViaCep,
 e no retorno, guarda na base local para economizar proximas chamadas.
