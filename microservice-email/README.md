@@ -33,6 +33,10 @@ JSON: http://localhost:8087/api-docs/
 UI: http://localhost:8087/swagger.html
 ```
 
+## Testes
+
+Foi decido que os testes serão de integração e ocorrerão na camada Controller e Service (regras) ao mesmo tempo, mockando o necessário.
+
 ## Observações
 
 O cliente SMTP real de email escolhido é gratutito e eventualmente pode estar fora do ar.

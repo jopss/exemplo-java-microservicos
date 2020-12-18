@@ -32,6 +32,10 @@ JSON: http://localhost:8086/api-docs/
 UI: http://localhost:8086/swagger.html
 ```
 
+## Testes
+
+Foi decido que os testes serão de integração e ocorrerão na camada Controller e Service (regras) ao mesmo tempo, mockando o necessário.
+
 ## Observações
 
 Como exemplo nao esta indo na receita federal (base paga), somente validando modulo 11.
