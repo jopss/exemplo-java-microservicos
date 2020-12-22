@@ -49,7 +49,7 @@ public class EnderecoRestTest {
     public void buscarCepBase() throws Exception {
         Mockito.when(repository.findByCep(Mockito.any())).thenReturn(endereco);
 
-        this.mockMvc.perform(get("/endereco/buscar?cep=" + endereco.getCep())
+        this.mockMvc.perform(get("/endereco/" + endereco.getCep())
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -62,7 +62,7 @@ public class EnderecoRestTest {
     public void buscarCepExternoESalvar() throws Exception {
         Mockito.when(repository.findByCep(Mockito.any())).thenReturn(null);
 
-        this.mockMvc.perform(get("/endereco/buscar?cep=" + endereco.getCep())
+        this.mockMvc.perform(get("/endereco/" + endereco.getCep())
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -76,7 +76,7 @@ public class EnderecoRestTest {
         Mockito.when(repository.findByCep(Mockito.any())).thenReturn(null);
         Mockito.when(adapter.buscarExterno(Mockito.any())).thenReturn(null);
 
-        this.mockMvc.perform(get("/endereco/buscar?cep=123")
+        this.mockMvc.perform(get("/endereco/123")
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest());

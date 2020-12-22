@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>jopss.exemplo</groupId>
-    <artifactId>microservice-endereco</artifactId>
+    <artifactId>microservice-documento</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>microservice-endereco</name>
-    <description>Projeto microservice para tratamento de enderecos</description>
+    <name>microservice-documento</name>
+    <description>Projeto microservice para tratamento de documentos</description>
 
     <properties>
         <java.version>11</java.version>

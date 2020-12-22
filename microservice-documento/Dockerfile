@@ -5,5 +5,5 @@ WORKDIR /tmp/
 RUN mvn package
 
 FROM openjdk:11.0.6-jre-slim
-COPY --from=DK_MAVEN /tmp/target/*.jar microservice-endereco.jar
-ENTRYPOINT ["java","-jar","/microservice-endereco.jar"]
+COPY --from=DK_MAVEN /tmp/target/*.jar microservice-documento.jar
+ENTRYPOINT ["java","-jar","/microservice-documento.jar"]

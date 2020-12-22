@@ -22,8 +22,8 @@ http://localhost:8085/actuator/health
 Para rodar via docker:
 
 ```
-docker build -t microservice-enderecoAPI .
-docker run -p 8085:8085 microservice-enderecoAPI
+docker build -t microservice-endereco .
+docker run -p 8085:8085 microservice-endereco
 ```
 
 ## Documentação API
