@@ -1,6 +1,7 @@
 package jopss.exemplo.microserviceendereco.integracao;
 
 import feign.FeignException;
+import feign.RetryableException;
 import jopss.exemplo.microserviceendereco.excecao.EnderecoException;
 import jopss.exemplo.microserviceendereco.negocio.modelo.Endereco;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,8 @@ public class ViaCepAdapter {
                 throw new EnderecoException("Cep invalido");
             }
             throw e;
+        }catch(RetryableException e){
+            throw new EnderecoException("ViaCep fora do ar. Tente novamente.");
         }
     }
 }
