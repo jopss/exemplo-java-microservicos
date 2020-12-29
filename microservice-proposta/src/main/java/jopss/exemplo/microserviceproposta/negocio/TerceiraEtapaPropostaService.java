@@ -1,6 +1,7 @@
 package jopss.exemplo.microserviceproposta.negocio;
 
 import jopss.exemplo.microserviceproposta.integracao.documento.DocumentoAdapter;
+import jopss.exemplo.microserviceproposta.integracao.documento.DocumentoRequisicao;
 import jopss.exemplo.microserviceproposta.negocio.modelo.ClienteTemporario;
 import jopss.exemplo.microserviceproposta.negocio.modelo.DocumentoCliente;
 import jopss.exemplo.microserviceproposta.negocio.modelo.Proposta;
@@ -35,7 +36,7 @@ public class TerceiraEtapaPropostaService {
 
     private void tratarDocumento(Proposta proposta, MultipartFile file){
         ClienteTemporario cliente = proposta.getCliente();
-        DocumentoCliente documento = this.documentoAdapter.enviarDocumento(cliente.getId(), file);
+        DocumentoCliente documento = this.documentoAdapter.executar(new DocumentoRequisicao(cliente.getId(), file));
         cliente.setDocumento(documento);
         this.clienteTemporarioRepository.save(cliente);
     }

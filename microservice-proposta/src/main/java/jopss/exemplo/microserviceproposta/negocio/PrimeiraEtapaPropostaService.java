@@ -2,6 +2,7 @@ package jopss.exemplo.microserviceproposta.negocio;
 
 import jopss.exemplo.microserviceproposta.excecao.PropostaException;
 import jopss.exemplo.microserviceproposta.integracao.cpf.CPFAdapter;
+import jopss.exemplo.microserviceproposta.integracao.cpf.CPFRequisicao;
 import jopss.exemplo.microserviceproposta.negocio.modelo.ClienteTemporario;
 import jopss.exemplo.microserviceproposta.negocio.modelo.Proposta;
 import jopss.exemplo.microserviceproposta.negocio.repository.ClienteTemporarioRepository;
@@ -38,7 +39,7 @@ public class PrimeiraEtapaPropostaService {
     }
 
     private void tratarCPF(PrimeiraEtapa etapa){
-        String cpfValido = this.cpfAdapter.tratarEValidarCPF(etapa.getCpf());
+        String cpfValido = this.cpfAdapter.executar(new CPFRequisicao(etapa.getCpf()));
         etapa.setCpf(cpfValido);
     }
 

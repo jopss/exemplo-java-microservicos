@@ -1,6 +1,8 @@
 package jopss.exemplo.microserviceproposta.integracao.endereco;
 
-public class EnderecoAPI {
+import jopss.exemplo.microserviceproposta.integracao.RequisicaoMicroservices;
+
+public class EnderecoAPI extends RequisicaoMicroservices {
     private String cep;
     private String logradouro;
     private String complemento;
@@ -8,6 +10,12 @@ public class EnderecoAPI {
     private String localidade;
     private String uf;
     private String ibge;
+
+    public EnderecoAPI(){}
+
+    public EnderecoAPI(String cep) {
+        this.cep = cep;
+    }
 
     public String getCep() {
         return cep;

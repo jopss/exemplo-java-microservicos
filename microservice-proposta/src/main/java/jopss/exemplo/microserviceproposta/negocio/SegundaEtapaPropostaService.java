@@ -1,5 +1,6 @@
 package jopss.exemplo.microserviceproposta.negocio;
 
+import jopss.exemplo.microserviceproposta.integracao.endereco.EnderecoAPI;
 import jopss.exemplo.microserviceproposta.integracao.endereco.EnderecoAdapter;
 import jopss.exemplo.microserviceproposta.negocio.modelo.ClienteTemporario;
 import jopss.exemplo.microserviceproposta.negocio.modelo.Endereco;
@@ -38,7 +39,7 @@ public class SegundaEtapaPropostaService {
     }
 
     private void tratarEndereco(Proposta proposta, SegundaEtapa etapa){
-        Endereco endereco = this.enderecoAdapter.validarETratarEndereco(etapa.getCep());
+        Endereco endereco = this.enderecoAdapter.executar(new EnderecoAPI(etapa.getCep()));
         endereco = this.enderecoRepository.save(endereco);
 
         ClienteTemporario cliente = proposta.getCliente();

@@ -2,6 +2,7 @@ package jopss.exemplo.microserviceproposta.negocio;
 
 import jopss.exemplo.microserviceproposta.excecao.PropostaInexistenteException;
 import jopss.exemplo.microserviceproposta.excecao.SituacaoPropostaInvalidaException;
+import jopss.exemplo.microserviceproposta.integracao.email.EmailAPI;
 import jopss.exemplo.microserviceproposta.integracao.email.EmailAdapter;
 import jopss.exemplo.microserviceproposta.negocio.modelo.ClienteTemporario;
 import jopss.exemplo.microserviceproposta.negocio.modelo.Proposta;
@@ -51,6 +52,6 @@ public class PropostaService {
     }
 
     private void enviarEmail(ClienteTemporario cliente, String titulo, String mensagem){
-        this.emailAdapter.enviarEmail(cliente.getEmail(), titulo, mensagem);
+        this.emailAdapter.executar(new EmailAPI(cliente.getEmail(), titulo, mensagem));
     }
 }

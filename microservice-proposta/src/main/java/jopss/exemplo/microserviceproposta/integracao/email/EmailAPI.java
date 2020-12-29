@@ -1,9 +1,11 @@
 package jopss.exemplo.microserviceproposta.integracao.email;
 
+import jopss.exemplo.microserviceproposta.integracao.RequisicaoMicroservices;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class EmailAPI {
+public class EmailAPI extends RequisicaoMicroservices {
     private List<String> para = new ArrayList<>();
     private String titulo;
     private String mensagem;
