@@ -12,14 +12,14 @@ public class Documento extends AbstractPersistable<Long> {
     @NotNull
     @Column(unique = true)
     private Long idPessoa;
-    private String documento;
+    private String nomeDocumento;
 
     public Documento() {
     }
 
-    public Documento(@NotNull Long idPessoa, String documento) {
+    public Documento(Long idPessoa, String nomeDocumento) {
         this.idPessoa = idPessoa;
-        this.documento = documento;
+        this.nomeDocumento = nomeDocumento;
     }
 
     public Long getIdPessoa() {
@@ -30,11 +30,11 @@ public class Documento extends AbstractPersistable<Long> {
         this.idPessoa = idPessoa;
     }
 
-    public String getDocumento() {
-        return documento;
+    public String getNomeDocumento() {
+        return nomeDocumento;
     }
 
-    public void setDocumento(String documento) {
-        this.documento = documento;
+    public void setNomeDocumento(String nomeDocumento) {
+        this.nomeDocumento = nomeDocumento;
     }
 }

@@ -1,6 +1,6 @@
 package jopss.exemplo.microserviceproposta.negocio.modelo;
 
-import jopss.exemplo.microserviceproposta.excecao.PropostaException;
+import jopss.exemplo.microserviceproposta.excecao.SituacaoPropostaInvalidaException;
 import jopss.exemplo.microserviceproposta.negocio.util.GeradorHash;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
@@ -42,23 +42,41 @@ public class Proposta extends AbstractPersistable<Long> {
 
     private void andarSituacaoPrimeiraEtapa() {
         if(this.situacao != null){
-            throw new PropostaException("Proposta invalida. Nao é possivel andar para situacao da primeira etapa");
+            throw new SituacaoPropostaInvalidaException("Proposta invalida. Nao é possivel andar para situacao da primeira etapa");
         }
         this.situacao = SituacaoProposta.PRIMEIRA_ETAPA;
     }
 
     public void andarSituacaoSegundaEtapa() {
         if(this.situacao == null || !SituacaoProposta.PRIMEIRA_ETAPA.equals(this.situacao)){
-            throw new PropostaException("Proposta invalida. Somente é possivel salvar após completar o cadastro inicial.");
+            throw new SituacaoPropostaInvalidaException("Proposta invalida. Somente é possivel salvar após completar o cadastro inicial.");
         }
         this.situacao = SituacaoProposta.SEGUNDA_ETAPA;
     }
 
     public void andarSituacaoTerceiraEtapa() {
         if(this.situacao == null || !SituacaoProposta.SEGUNDA_ETAPA.equals(this.situacao)){
-            throw new PropostaException("Proposta invalida. Somente é possivel salvar após completar o cadastro de endereços.");
+            throw new SituacaoPropostaInvalidaException("Proposta invalida. Somente é possivel salvar após completar o cadastro de endereços.");
         }
         this.situacao = SituacaoProposta.TERCEIRA_ETAPA;
+    }
+
+    public void andarSituacaoAceita() {
+        if(this.situacao == null || !SituacaoProposta.TERCEIRA_ETAPA.equals(this.situacao)){
+            throw new SituacaoPropostaInvalidaException("Proposta invalida. Somente é possivel salvar no detalhamento.");
+        }
+        this.situacao = SituacaoProposta.ACEITA;
+    }
+
+    public void andarSituacaoRecusada() {
+        if(this.situacao == null || !SituacaoProposta.TERCEIRA_ETAPA.equals(this.situacao)){
+            throw new SituacaoPropostaInvalidaException("Proposta invalida. Somente é possivel salvar no detalhamento.");
+        }
+        this.situacao = SituacaoProposta.RECUSADA;
+    }
+
+    public boolean podeDetalhar(){
+        return this.situacao!=null && SituacaoProposta.TERCEIRA_ETAPA.equals(this.situacao);
     }
 
     private void gerarCodigo() {

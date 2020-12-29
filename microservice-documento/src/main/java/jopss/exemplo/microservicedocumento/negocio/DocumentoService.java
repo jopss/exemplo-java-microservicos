@@ -34,10 +34,10 @@ public class DocumentoService {
         if(doc == null){
             doc = new Documento(idPessoa, nomeArquivo);
         }else{
-            doc.setDocumento(nomeArquivo);
+            doc.setNomeDocumento(nomeArquivo);
         }
 
-        this.gravarArquivo(nomeArquivo, inputStream);
+        this.gravarArquivoFisico(nomeArquivo, inputStream);
         return this.repository.save(doc);
     }
 
@@ -45,7 +45,7 @@ public class DocumentoService {
         return idPessoa+"-"+nomeArquivo;
     }
 
-    private void gravarArquivo(String nomeArquivo, InputStream inputStream) {
+    private void gravarArquivoFisico(String nomeArquivo, InputStream inputStream) {
         try{
             Path caminhoArquivo = Paths.get(diretorio).toAbsolutePath().normalize().resolve(nomeArquivo);
             Files.copy(inputStream, caminhoArquivo, StandardCopyOption.REPLACE_EXISTING);
@@ -61,7 +61,7 @@ public class DocumentoService {
         }
 
         try{
-            Path caminhoArquivo = Paths.get(diretorio).toAbsolutePath().normalize().resolve(doc.getDocumento());
+            Path caminhoArquivo = Paths.get(diretorio).toAbsolutePath().normalize().resolve(doc.getNomeDocumento());
             File arquivo = caminhoArquivo.toFile();
 
             if(arquivo == null || !arquivo.exists()){

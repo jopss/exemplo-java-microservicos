@@ -3,6 +3,7 @@ package jopss.exemplo.microserviceproposta.negocio.modelo;
 import jopss.exemplo.microserviceproposta.excecao.PropostaException;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
@@ -38,7 +39,7 @@ public class ClienteTemporario extends AbstractPersistable<Long> {
     @ManyToOne
     private Endereco endereco;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private DocumentoCliente documento;
 
     public ClienteTemporario(){}

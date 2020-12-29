@@ -15,6 +15,13 @@ public class DocumentoCliente extends AbstractPersistable<Long> {
     @OneToOne(mappedBy = "documento")
     private ClienteTemporario cliente;
 
+    public DocumentoCliente(){}
+
+    public DocumentoCliente(String documentoCliente, String nomeArquivo) {
+        this.documentoCliente = documentoCliente;
+        this.nomeArquivo = nomeArquivo;
+    }
+
     public String getDocumentoCliente() {
         return documentoCliente;
     }

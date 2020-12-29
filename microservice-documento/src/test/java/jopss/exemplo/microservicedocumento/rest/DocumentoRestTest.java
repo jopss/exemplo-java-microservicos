@@ -1,6 +1,5 @@
 package jopss.exemplo.microservicedocumento.rest;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import jopss.exemplo.microservicedocumento.negocio.DocumentoRepository;
 import jopss.exemplo.microservicedocumento.negocio.modelo.Documento;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,6 +12,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -23,9 +23,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class DocumentoRestTest {
     @Autowired
     private MockMvc mockMvc;
-
-    @Autowired
-    private ObjectMapper objectMapper;
 
     @MockBean
     private DocumentoRepository repository;
@@ -53,8 +50,9 @@ public class DocumentoRestTest {
                 .contentType(MediaType.MULTIPART_FORM_DATA_VALUE)
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.idPessoa").value(documento.getIdPessoa()))
-                .andExpect(jsonPath("$.documento").value(documento.getDocumento()));
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(jsonPath("$.content.idPessoa").value(documento.getIdPessoa()))
+                .andExpect(jsonPath("$.content.nomeDocumento").value(documento.getNomeDocumento()));
     }
 
     @Test
@@ -65,8 +63,8 @@ public class DocumentoRestTest {
                 .contentType(MediaType.MULTIPART_FORM_DATA_VALUE)
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.idPessoa").value(documento.getIdPessoa()))
-                .andExpect(jsonPath("$.documento").value(documento.getDocumento()));
+                .andExpect(jsonPath("$.content.idPessoa").value(documento.getIdPessoa()))
+                .andExpect(jsonPath("$.content.nomeDocumento").value(documento.getNomeDocumento()));
     }
 
 }
