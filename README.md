@@ -8,6 +8,16 @@ Foi levantado os seguintes microserviços abaixo, com suas portas de conexão we
 
 Tudo inicia-se com uma Proposta. Ela contem etapas, e cada uma valida, formata e salva os dados. Apos uma proposta pronta, envia-se um email para o cliente para que ele aceite a proposta. Ao aceitar, cria-se um usuario e senha, e uma conta é cadastrada para o cliente. Com a conta pronta, pode-se transferir valores entre elas.
 
+Imagine telas wizard com o seguinte fluxo:
+
+* Etapa 1 - Criar dados do cliente.
+* Etapa 2 - Criar dados de endereço.
+* Etapa 3 - Enviar uma foto.
+* Etapa 4 - Detalhar os dados preenchidos, com opcao de aceitar ou recusar.
+* Aceite - Cria-se uma conta e envia email agradecendo. No email ha um link para criar login e senha.
+* Recusa - Envia email pedindo para aceitar a proposta. Caso aceite, segue o fluxo do aceite.
+* Logar - Apos logar, pode-se transferir valor para outra conta.
+
 As tecnologias basicas de todos são:
 
 * SpringBoot
