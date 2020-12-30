@@ -1,5 +1,6 @@
 package jopss.exemplo.microserviceproposta.negocio.modelo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
 import javax.persistence.Entity;
@@ -9,33 +10,35 @@ import javax.validation.constraints.NotBlank;
 @Entity
 public class DocumentoCliente extends AbstractPersistable<Long> {
     @NotBlank
-    private String documentoCliente;
+    private String nomeDocumento;
     @NotBlank
-    private String nomeArquivo;
+    private String arquivo;
+
+    @JsonIgnore
     @OneToOne(mappedBy = "documento")
     private ClienteTemporario cliente;
 
     public DocumentoCliente(){}
 
-    public DocumentoCliente(String documentoCliente, String nomeArquivo) {
-        this.documentoCliente = documentoCliente;
-        this.nomeArquivo = nomeArquivo;
+    public DocumentoCliente(String nomeDocumento, String arquivo) {
+        this.nomeDocumento = nomeDocumento;
+        this.arquivo = arquivo;
     }
 
-    public String getDocumentoCliente() {
-        return documentoCliente;
+    public String getNomeDocumento() {
+        return nomeDocumento;
     }
 
-    public void setDocumentoCliente(String documentoCliente) {
-        this.documentoCliente = documentoCliente;
+    public void setNomeDocumento(String nomeDocumento) {
+        this.nomeDocumento = nomeDocumento;
     }
 
-    public String getNomeArquivo() {
-        return nomeArquivo;
+    public String getArquivo() {
+        return arquivo;
     }
 
-    public void setNomeArquivo(String nomeArquivo) {
-        this.nomeArquivo = nomeArquivo;
+    public void setArquivo(String arquivo) {
+        this.arquivo = arquivo;
     }
 
     public ClienteTemporario getCliente() {

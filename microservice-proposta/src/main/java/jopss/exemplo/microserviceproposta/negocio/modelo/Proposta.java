@@ -28,6 +28,9 @@ public class Proposta extends AbstractPersistable<Long> {
     @ManyToOne
     private ClienteTemporario cliente;
 
+    //id do cliente real retornado pelo micro de cliente
+    private Long idCliente;
+
     @NotNull
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataCriacao = new Date();
@@ -113,5 +116,13 @@ public class Proposta extends AbstractPersistable<Long> {
 
     public void setDataCriacao(Date dataCriacao) {
         this.dataCriacao = dataCriacao;
+    }
+
+    public Long getIdCliente() {
+        return idCliente;
+    }
+
+    public void setIdCliente(Long idCliente) {
+        this.idCliente = idCliente;
     }
 }
