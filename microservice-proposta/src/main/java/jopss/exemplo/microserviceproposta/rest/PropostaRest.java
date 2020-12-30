@@ -23,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
@@ -55,7 +56,7 @@ public class PropostaRest {
         return new ResponseEntity<>(resp, HttpStatus.OK);
     }
 
-    @PostMapping("/{codigo}/segunda-etapa")
+    @PostMapping("/codigo/{codigo}/segunda-etapa")
     public ResponseEntity cadastrarSegundaEtapa(@PathVariable String codigo, @RequestBody @Valid SegundaEtapa etapa) {
         Proposta proposta = this.serviceSegundaEtapa.cadastrar(codigo, etapa);
 
@@ -66,7 +67,7 @@ public class PropostaRest {
         return new ResponseEntity<>(resp, HttpStatus.OK);
     }
 
-    @PostMapping("/{codigo}/terceira-etapa")
+    @PostMapping("/codigo/{codigo}/terceira-etapa")
     public ResponseEntity cadastrarTerceiraEtapa(@PathVariable String codigo, @RequestParam("file") MultipartFile file) {
         Proposta proposta = this.serviceTerceiraEtapa.cadastrar(codigo, file);
 
@@ -76,25 +77,31 @@ public class PropostaRest {
         return new ResponseEntity<>(resp, HttpStatus.OK);
     }
 
-    @GetMapping("/{codigo}")
+    @GetMapping("/codigo/{codigo}")
     public ResponseEntity buscarPorCodigo(@PathVariable @NotBlank String codigo) {
         Proposta proposta = this.serviceProposta.buscarProposta(codigo);
         return new ResponseEntity<>(proposta, HttpStatus.OK);
     }
 
-    @GetMapping("/{codigo}/detalhar")
+    @GetMapping("/{id}")
+    public ResponseEntity buscar(@PathVariable @NotNull Long id) {
+        Proposta proposta = this.serviceProposta.buscarPorId(id);
+        return new ResponseEntity<>(proposta, HttpStatus.OK);
+    }
+
+    @GetMapping("/codigo/{codigo}/detalhar")
     public ResponseEntity detalhar(@PathVariable @NotBlank String codigo) {
         Proposta proposta = this.serviceProposta.detalhar(codigo);
         return new ResponseEntity<>(proposta, HttpStatus.OK);
     }
 
-    @PostMapping("/{codigo}/aceitar")
+    @PostMapping("/codigo/{codigo}/aceitar")
     public ResponseEntity aceitarProposta(@PathVariable String codigo) {
         Proposta proposta = this.serviceProposta.aceitar(codigo);
         return new ResponseEntity<>(proposta, HttpStatus.OK);
     }
 
-    @PostMapping("/{codigo}/recusar")
+    @PostMapping("/codigo/{codigo}/recusar")
     public ResponseEntity recusarProposta(@PathVariable String codigo) {
         Proposta proposta = this.serviceProposta.recusar(codigo);
         return new ResponseEntity<>(proposta, HttpStatus.OK);

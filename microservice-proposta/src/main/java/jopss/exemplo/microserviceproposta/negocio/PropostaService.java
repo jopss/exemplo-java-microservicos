@@ -5,6 +5,9 @@ import jopss.exemplo.microserviceproposta.excecao.SituacaoPropostaInvalidaExcept
 import jopss.exemplo.microserviceproposta.integracao.cliente.ClienteAdapter;
 import jopss.exemplo.microserviceproposta.integracao.cliente.ClienteConverter;
 import jopss.exemplo.microserviceproposta.integracao.cliente.ClienteRequisicao;
+import jopss.exemplo.microserviceproposta.integracao.conta.ContaAdapter;
+import jopss.exemplo.microserviceproposta.integracao.conta.ContaConverter;
+import jopss.exemplo.microserviceproposta.integracao.conta.ContaRequisicao;
 import jopss.exemplo.microserviceproposta.integracao.email.EmailAPI;
 import jopss.exemplo.microserviceproposta.integracao.email.EmailAdapter;
 import jopss.exemplo.microserviceproposta.negocio.modelo.ClienteTemporario;
@@ -28,12 +31,17 @@ public class PropostaService {
     @Autowired
     private ClienteConverter clienteConverter;
 
+    @Autowired
+    private ContaAdapter contaAdapter;
+
+    @Autowired
+    private ContaConverter contaConverter;
+
+    @Autowired
+    private TextoEmail textoEmail;
+
     public Proposta buscarProposta(String codigo){
-        Proposta proposta = this.propostaRepository.findByCodigo(codigo);
-        if(proposta == null || proposta.isNew()){
-            throw new PropostaInexistenteException("Nao existe uma proposta com codigo "+codigo);
-        }
-        return proposta;
+        return this.propostaRepository.findByCodigo(codigo).orElseThrow(() -> new PropostaInexistenteException("Nao existe uma proposta com codigo "+codigo));
     }
 
     public Proposta detalhar(String codigo) {
@@ -48,18 +56,17 @@ public class PropostaService {
         Proposta proposta = this.detalhar(codigo);
         proposta.andarSituacaoAceita();
 
-        Long idCliente = this.cadastrarClienteRealRetornandoId(proposta.getCliente());
-        proposta.setIdCliente(idCliente);
+        this.cadastrarClienteRealInserindoId(proposta);
+        this.cadastrarContaInserindoId(proposta);
 
-        //TODO: criar conta
-        this.enviarEmail(proposta.getCliente(), "Proposta Aceita", "Sua conta foi criada. Acesse para logar.");
+        this.emailAdapter.executar(this.textoEmail.aceite(proposta));
         return this.propostaRepository.save(proposta);
     }
 
     public Proposta recusar(String codigo) {
         Proposta proposta = this.detalhar(codigo);
         proposta.andarSituacaoRecusada();
-        this.enviarEmail(proposta.getCliente(), "Proposta Recusada", "Voce recusou a proposta de conta. Caso mude e opiniao aceita aqui por favor.");
+        this.emailAdapter.executar(this.textoEmail.recusa(proposta));
         return this.propostaRepository.save(proposta);
     }
 
@@ -67,8 +74,17 @@ public class PropostaService {
         this.emailAdapter.executar(new EmailAPI(cliente.getEmail(), titulo, mensagem));
     }
 
-    private Long cadastrarClienteRealRetornandoId(ClienteTemporario cliente) {
-        ClienteRequisicao clienteRequisicao = this.clienteConverter.modeloParaClienteRequisicao(cliente);
-        return this.clienteAdapter.executar(clienteRequisicao);
+    private void cadastrarClienteRealInserindoId(Proposta proposta) {
+        ClienteRequisicao req = this.clienteConverter.modeloParaClienteRequisicao(proposta.getCliente());
+        proposta.setIdCliente(this.clienteAdapter.executar(req));
+    }
+
+    private void cadastrarContaInserindoId(Proposta proposta) {
+        ContaRequisicao req = this.contaConverter.modeloParaContaRequisicao(proposta);
+        proposta.setIdConta(this.contaAdapter.executar(req));
+    }
+
+    public Proposta buscarPorId(Long id) {
+        return this.propostaRepository.findById(id).orElseThrow(() -> new PropostaInexistenteException("Nao existe uma proposta com id "+id));
     }
 }
